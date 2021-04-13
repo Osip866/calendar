@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .tablClass {
+        border: 1px red solid;
+        text-align: center;
+        background-color: aqua;
+        width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .h {
+        text-align: center;
+    }
+</style>
+
+<body>
+    <script>
+        // создаем таблицу
+        function tableCreate() {
+            var body = document.body;
+            var tbl = document.createElement("table");
+            tbl.className = "tablClass";
+            tbl.setAttribute("border", 0);
+            var tblBody = document.createElement("tbody");
+            var h = document.createElement("h2");
+            h.className = "h";
+            for (var j = 0; j <= 6; j++) {
+                var row = document.createElement("tr");
+                for (var i = 0; i < 7; i++) {
+                    var cell = document.createElement("td");
+                    row.appendChild(cell);
+                }
+                tblBody.appendChild(row);
+            }
+            tbl.appendChild(tblBody);
+            body.appendChild(h);
+            body.appendChild(tbl);
+
+        }
+        tableCreate();
+
+        var month = prompt("Введите месяц (номер месяца)");
+        (function m() {
+            month = month - 1;
+            return month;
+        }());
+        var year = prompt("Введите год");
+        let dat = new Date(year, month);
+        let dayInner = 2;
+        function daysInMonth(month, year) {
+            var days;
+            switch (month) {                // определяем количество дней в месяце
+                case 1:
+                    var leapYear = ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+                    days = leapYear ? 29 : 28;
+                    break;
+                case 3: case 5: case 8: case 10:
+                    days = 30;
+                    break;
+                default:
+                    days = 31;
+            }
+            return days;
+        };
+        for (var i = 1; i <= daysInMonth(month, year); i++) {
+            var date = i;
+            let dat = new Date(year, month, date);
+            var day = dat.getDate();
+            let week = dat.getDay();
+            (function w() {
+                if (week == 0) {
+                    week = 7;
+                }
+            }());
+            console.log(day);
+            console.log(week);
+            // использовать поиск по id
+            document.querySelector("body > table > tbody > tr:nth-child(" + dayInner + ") > td:nth-child(" + week + ")").innerHTML = (day);
+            if (week == 7) {
+                dayInner++;
+            }
+        }
+        let mon;
+        switch (dat.getMonth()) {
+            case 0:
+                mon = "Январь";
+                break;
+            case 1:
+                mon = "Февраль";
+                break;
+            case 2:
+                mon = "Март";
+                break;
+            case 3:
+                mon = "Апрель";
+                break;
+            case 4:
+                mon = "Май";
+                break;
+            case 5:
+                mon = "Июнь";
+                break;
+            case 6:
+                mon = "Июль";
+                break;
+            case 7:
+                mon = "Август";
+                break;
+            case 8:
+                mon = "Сентябрь";
+                break;
+            case 9:
+                mon = "Октябрь";
+                break;
+            case 10:
+                mon = "Ноябрь";
+                break;
+            case 11:
+                mon = "Декабрь";
+                break;
+        }
+        (function head() {
+            document.querySelector("body > h2").innerHTML = mon + " " + year + " года";
+            document.querySelector("body > table > tbody > tr:nth-child(1) > td:nth-child(1)").innerHTML = ("ПН");
+            document.querySelector("body > table > tbody > tr:nth-child(1) > td:nth-child(2)").innerHTML = ("ВТ");
+            document.querySelector("body > table > tbody > tr:nth-child(1) > td:nth-child(3)").innerHTML = ("СР");
+            document.querySelector("body > table > tbody > tr:nth-child(1) > td:nth-child(4)").innerHTML = ("ЧТ");
+            document.querySelector("body > table > tbody > tr:nth-child(1) > td:nth-child(5)").innerHTML = ("ПТ");
+            document.querySelector("body > table > tbody > tr:nth-child(1) > td:nth-child(6)").innerHTML = ("СБ");
+            document.querySelector("body > table > tbody > tr:nth-child(1) > td:nth-child(7)").innerHTML = ("ВС");
+        }());
+    </script>
+</body>
+
+</html>
